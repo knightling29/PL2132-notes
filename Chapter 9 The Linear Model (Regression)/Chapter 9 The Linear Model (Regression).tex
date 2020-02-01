@@ -1,0 +1,95 @@
+Equation of Linear regression:
+\begin{equation}
+Y_i = (\beta_0 + \beta_1X_1i) + \varepsilon_i
+\end{equation}
+
+Linear Models are simply straight lines. All equation are forms of the equation of a straight line. All straight lines can be defined by two things. 1) slope of the line (usually denoted by $b_1$ ) and 2) intercept of the line $b_0$. In regression model, $b_1$ and $b_0$ are known as regression coefficients.
+
+\section{Linear Model with several predictors}
+For linear models, we can include as many predictor variables as we like:
+\begin{equation}
+Y_i = (\beta_0 + \beta_1X_1i + \beta_2X_2i) + \varepsilon_i
+\end{equation}
+
+For two variables, our regression graph will not be a line but a plane with 2 dimensions.
+
+\section{Estimating the model}
+Model is usually not a perfect fit of the data.
+\emph{Residuals}: differences between what the model predicts and the observed data. 
+
+We calculate the total error in a model by squaring differences between observed values of the outcome and predicted values that come from the model.
+
+\begin{equation}
+\text{total error} = \sum^n_{i=1} (\text{observed}_i - \text{model}_i)^2
+\end{equation}
+
+Similarly, to assess the error in a linear model, we use sum of squared errors. This error is called \emph{sum of squared residuals} or residual sum of squares ($SS_R$)
+
+In order to estimate the $b$-values in a linear model, we will find the line with the smallest $SS_R$ because it would be the best fitting model. We use the method of least squares to estimate the parameter (b) which define the regression model for which the sum of squared errors is the minimum it can be given the data. 
+
+This method is known as the \textbf{ordinary least squares (OLS)} regression
+
+\section{Assessing goodness of fit, sums of squares, R and $R^2$}
+In order to assess whether our model is better than nothing, we need to compare the model against a baseline to see whether it "improves" how well we can predict the outcome. We can compare our model with the mean of the outcomes. As the mean of the outcomes is a model of "no relationship" between the variables: as one variable changes the prediction for the other remains constant. i.e. a horizontal line in a graph. 
+
+Using the mean of outcome as a baseline model, we can calculate the difference between observed values and the values predicted by the mean. We can squared these differences to give us the sum of squared difference also. We call this sum of squared difference as the \textbf{total sum of squares} (denoted by $SS_T$). It represents how good the mean is as a model of the observed outcomes scores.
+
+\begin{equation}
+\begin{split}
+SS_T & = (Y-M_Y)^2 \\
+SS_R & = (Y-\hat{Y})^2
+\end{split}
+\end{equation}
+Where Y is your observed data, $M_Y$ is the Mean of the observed data and $\hat{Y}$ is the predicted value using your model.
+
+We can use $SS_T$ and $SS_R$ to calculate how much better the linear model is than the baseline model of no relationship. The improvement in prediction resulting from using the linear model than the mean is calculated as the difference between $SS_T$ and $SS_R$. This improvement is known as the \textbf{model sum of squares} ($SS_M$). 
+
+\begin{equation}
+SS_M = SS_T - SS_R
+\end{equation}
+
+If $SS_M$ is large, then the linear model is very different from using the mean to predict the outcome variable. This implies that the linear model has made a huge prediction in improvement to predicting outcome variable. if $SS_M$ is small, then it is only slightly better than using the mean. 
+
+A useful measure arising from the sum of squares is the proportion of improvement due to the model. This is calculated by dividing the sum of squares for the model by the total sum of squares to give a quantity: $R^2$
+\begin{equation}
+\text{proportionate reduction in error}, R^2 = \frac{SS_M}{SS_T}
+\end{equation}
+
+\section{Using sum of squares in F test}
+We use F test to measure the amount of systematic variance divided by the amount of unsystematic variance. 
+F here is based upon the ratio of improvement due to the model ($SS_M$) and the error in the model ($SS_R$), however we do not use $SS_M$ or $SS_R$ as their values depend on the number of observations were added up. So instead we use the average sum of squares known as \textbf{mean squares} or MS to compute F.
+
+The mean sum of squares is the sum of squares divided by the associated degrees of freedom (similar to calculating variance from sum of squares). 
+
+\begin{equation}
+\begin{split}
+MS_M & = \frac{SS_M}{k}\\
+MS_R & = \frac{SS_R}{N-k-1}\\
+\end{split}
+\end{equation}
+
+Degrees of freedom for $SS_M$ is number of predictors in the model (k), and for $SS_R$ degree of freedom are the number of observation (N) minus number of parameter estimated (i.e. number of $b$ coefficient including the constant).  total number of $b$ will $k+1$ if we include the intercept $b_0$.
+
+F statistic is computed from these mean squares: 
+\begin{equation}
+F = \frac{MS_M}{MS_R}
+\end{equation}
+
+If model is a good model, F test will be larger, due to larger $MS_M$
+
+F-statistics is also used to calculate the significance of $R^2$ using the following equation:
+\begin{equation}
+F = \frac{(N-k-1)R^2}{k(1-R^2}
+\end{equation}
+where N is the number of participants, k is the number of predictors in the model. This F tests the null hypothesis that $R^2$ is zero (i.e. there is no improvement in the sum of squared error due to fitting the model).
+
+\section{Assessing individual predictors}
+A regression coefficient of 0 means (1) A unit change in the predictor variable results in no change in the predicted value of the outcome (predicted value of the outcome is constant). (2) The linear model is "flat" and horizontal. 
+
+If a variable significantly predicts an outcome, it should have a $b$ value that is different from zero. This hypothesis is tested using a t statistics that tests the null hypothesis that the value of $b$ is 0. What we are interested in the t test is whether the $b$ we have is big compared to the amount of error in that estimate. Remember that the standard error for $b$ tells us how different $b$ values will be across different samples. If standard error is very small, then most samples are likely to have a $b$ value that is similar to the one in oru sample (as there is little variation across samples). 
+
+\begin{equation}
+t = \frac{b_{\text{observed}} - b_{\text{expected}}}{SE_h} = \frac{b_{\text{observed}}}{SE_h} 
+\end{equation}
+
+Null hypothesis $b_{\text{expected}}$ is 0. You check your t statistics using the degree of freedom of $N-k-1$

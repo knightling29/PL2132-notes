@@ -1,0 +1,88 @@
+\section{What is bias}
+We oftern obtain values for parameters ina model using method of least squares. These parameter values in our sample estimate the parameter values in the population because we want to draw conclusions that extend beyond our sample. For each parameter in the model, we also compute an estimate of how well it represents the population such as standard error, or confidence interval. parameters can then be used to test hypothesis by converting them to a test statistic with an associated probability (p-value).
+
+Statistical bias enters the process in 3 ways:
+\begin{enumerate}
+\item Things that bias the parameter estimates (including effect sizes);
+\item Things that bias standard error and confidence intervals;
+\item things that bias test statistics and p-values.
+\end{enumerate}
+
+2 and 3 are linked by standard error, so if standard error is biased, then corresponding confidence interval and p-value will be biased too.
+
+\section{Outliers}
+Outliers have a big effect on mean. This in turn have a big effect on sum of squared errors. This is because any bias created by the outlier is magnified by the fact that the deviations are squared. 
+
+The effect of outliers on sum of squared errors is important as it is used to compute standard deviation, which is in turn used to estimate the standard error, which is used to calculate confidence intervals and test statistics.
+
+\section{Overview of Assumptions}
+
+An assumption is a condition that ensures that what you are attempting to do works. E.g. when we assess a model using a test statistic, we usually will have made some assumptions and if these assumptions are true then we know that we can take the test statistics and p-value at face value. If not, then they will be inaccurate
+
+Many statistical models have idiosyncratic assumptions, but most are derived from the linear model and so they share a common set of assumptions. 
+
+Main assumptions to look at:
+\begin{itemize}
+\item additivity and linearity;
+\item normality of something or other;
+\item homoscedasticity/homogeneity of variance;
+\item independence.
+\end{itemize}
+
+\subsection{Additivity and Linearity}
+
+Assumption of linearity and additivity means that relationship between outcome variable and predictors is accurately described by the equation:
+\begin{equation}
+\text{outcome}_i = (b_0 + b_1X_{1i} + b_2X_{2i}) + error_i
+\end{equation}
+Assumption of linearity: This means that scores on the outcome variable are in reality linearly related to any predictors and that if you have several predictors then their combined effect is best described by adding their effects together. 
+
+So if relationship between variables is curvilinear, then describing it with a linear model is wrong. And there is no point interpreting its parameter estimates or worrying about significance tests.
+
+\subsection{Normally distributed something or other}
+
+Many people wrongly take the "assumption of normality to mean that the data need to be normally distributed. In fact, it relates in different ways to things we want to do when fitting models and assessing them. 
+
+\begin{enumerate}
+\item \textbf{Parameter estimates}: The mean is a parameter, extreme scores bias it. This shows that estimates of parameters are affected by non-normal distributions (such as those with outliers). Parameter estimates differ by in how much they are biased in a non normal distribution: e.g. median is affected less by skewed distribution.
+
+All models include some error, wont predict outcome perfectly for each case. So for each case, there is an error term (deviance or residual). If residuals are normally distributed in the population, then using least squares to estimate parameters (the $b$s in equation 3.1) will produce better estimates than other methods.
+\item \textbf{Confidence intervals}: For confidence intervals a parameter estimate (e.g. the mean or $b$ in equation) to be accurate, the estimate must have a normal sampling distribution.
+\item \textbf{Null Hypothesis Significance Testing (NHST)}: For significance tests of models (and the parameter estimates that define them) to be accurate, the sampling distribution of what's being tested must be normal. e.g. if testing for whether two means are different, the data themselves do not need to be normally distributed. However, the \emph{sampling distribution of means} (or difference between means) must be normal. 
+
+When looking at relationship between variables, significance tests of the parameter estimates that define the relationship ($b$ in the equation) will only be accurate when sampling distribution of the estimate is normal.
+\end{enumerate}
+
+\section{Central Limit Theorem}
+\textbf{Central Limit Theorem}: regardless of the shape of the population, parameter estimates of that population will have a normal distribution if the samples are large enough.
+\subsection{When does the assumption of normality matter?}
+Central limit theorem means that there is a variety of situations in which we can assume normality regardless of the shape of our sample data. 
+\begin{enumerate}
+\item For \textbf{confidence intervals around a parameter estimate} to be accurate (parameter estimate refers to the mean or $b$ in equation), estimate must come from normal sampling distribution. But CLT tells us that estimate will come from a normal distribution regardless of what the sample or population data looks like. No need to worry about assumption of normality if \emph{sample sizes large enough}
+\item For \textbf{statistic models} to be accurate, sampling distribution must be normal. But CLT tells us no matter shape of data, if sample test large enough sampling distribution will be normal
+\item For \textbf{estimates of model parameters} ($b$ in equation) to be optimal using least squared method, residuals in the population must be normally distributed. 
+
+method of least squares will always give you an estimate of the model parameters that minimizes error, so you no need to assume normality to fit a linear model and estimate the parameters that define it. 
+\end{enumerate}
+
+\section{Homoscedasticity/Homogeneity of Variance}
+Homogeneity of variance affect two things:
+\begin{enumerate}
+\item \textbf{parameters}: using method of least squares to estimate parameters in the model, we get optimal estimates if the variance of the outcome variable is equal across different values of the predictor variable. 
+\item \textbf{NHST}: Test statistics often assume the variance of the outcome variable is equal across different values of the predictor variable. If this is not the case, then test statistics will be inaccurate.
+\end{enumerate}
+\subsection{Why does homogeneity of variance matter?}
+If we assume equality of variance, then the parameter estimates for a linear model are optimal using method of least squares. 
+
+Method of least squares will produce "unbiased" estimates of parameters even when homogeneity of variance can't be assumed, but they won't be optimal. If no homogeneity of variance, better estimates can be achieved using other methods, e.g. using weighted least squares in which each case is weighted by a function of its variance. 
+
+If all you care about is estimating the parameters of the model in your sample, then you don't need to worry about homogeneity of variance in most cases.
+
+But unequal variance creates inconsistencies in the estimate of the standard error associated with the parameter estimates in the model. So confidence intervals, significance tests ($p$-values) for parameter estimates will be biased, because they are computed using standard error. So if you want to test the significance of the model or its parameter estimates then homogeneity of variance matters.
+\section{Independence}
+
+Assumption of \textbf{Independence} means that errors in your model are not related to each other. \\
+
+The equation that we use to estimate \textbf{ standard error} is only valid when observations are independent. \\
+
+If we use \textbf{method of least squares}, model parameter estimates will still be valid but not optimal (can get better estimates using different method, e.g. multilevel models).\\

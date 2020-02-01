@@ -1,0 +1,77 @@
+
+\section{Looking at differences}
+We look at different means when there is a systematic manipulation of independent variables.  (This is often done in a between-groups design). 
+
+Researchers get tempted to compare artificially created groups by dividing people into groups based on a median score; avoid doing that. 
+
+\section{invisibility and mischief example}
+Testing the effect of invisibility has on the tendency for mischief. DV is mischief, IV is invisibility. Invisibility is a categorical variable, you either can be invisible or not. 
+\section{Categorical predictors in a linear model}
+If we want to compare differences between the means of two groups, all we are doing is predicting an outcome based on memberships of two groups. This is a \textbf{linear model with one dichotomous predictor}. the $b$ for the model reflects the differences between mean levels in the two different groups, and the resulting t-test, will tell us whether the difference between means is different from zero (t-test tests whether $b$ = 0). When we are comparing means, we are using a special case of linear model.
+
+Recall all statistical models are version of this idea: 
+
+\begin{center}
+$\text{outcome}_i = (\text{model}) + \text{error}_i$
+\end{center}
+
+When using a linear model the equation above becomes equation in which the model is defined by parameters: $b_0$ tells you the value of the outcome when the predictor is zero, $b_1$ quantifies the relationship between the predictor ($X_i$) and outcome ($Y_i$):
+
+\begin{center}
+$Y_i = (b_0 + b_{1}X_{1i}) + \varepsilon_i$
+\end{center}
+
+So in the invisibility and mischief example, the equation will look like this:
+\begin{center}
+$\text{Mischief}_i = (b_0 + b_{1}\text{Cloak}_i) + \varepsilon_i$
+\end{center}
+
+No cloak condition, knowing that they are in that group, the best prediction we could make of the number of mischievous acts would be the group mean because this value is the summary statistics with the least squared error. So the value of $Y$ in the equation will be the group mean of mischief under no cloak and the value of the cloak variable will be 0 (which is what we code for nominal variable). If we ignore the error term, the equation is: 
+\begin{center}
+$\bar{X}_{\text{noCloak}} = b_0 + (b_{1} * 0 )$\\
+$b_0 = \bar{X}_{\text{noCloak}}$
+\end{center}
+
+Now to predict mischief in people who is invisible. Predicted value of the outcome will be the mean of the group to which the person belonged (cloak). Value of Cloak variable is 1. In the above we see that $b_0$ is equal to $\bar{X}_{\text{noCloak}}$ placing all the values in the equation, we get: 
+
+\begin{center}
+$\bar{X}_{\text{Cloak}} = b_0 + (b_{1} * 1)$\\
+$\bar{X}_{\text{Cloak}} = b_0 + b_1$ \\
+$\bar{X}_{\text{Cloak}} =\bar{X}_{\text{noCloak}} + b_1$ \\
+$b_1 = \bar{X}_{\text{Cloak}} - \bar{X}_{\text{noCloak}} $
+\end{center}
+
+So $b_1$ represents the difference between group means. In a model with a categorical predictor with two predictors, $b_1$ represents the difference between group means, $b_0$ represent the group mean of the group coded as 0.
+
+Remember that t-statistic is used to ascertain whether a model parameter ($b_1$) is equal to 0; in this context, it would test whether the difference between group means is 0.
+\section{t-test}
+
+Two variants of t test:
+\begin{itemize}
+\item \textbf{Independent t-test}: used when comparing two means that come from conditions consisting of different entities.
+\item \textbf{Paired samples t-test}: or dependent t test, used when you want to compare two means that come from conditions consisting of the same or related entities
+\end{itemize}
+\subsection{Rationale for the t-test}
+\begin{itemize}
+\item Both t-tests, two samples of data are collected
+\item If samples come from the same population, we expect means to be roughly equal. Under null hypothesis, we assume that the experimental manipulation has no effect on the participants' behaviour: therefore, expect means of two samples to be similar.
+\item Compared difference between sample means we collected to the difference between sample means if null hypothesis was true. We use the standard error to gauge the variability between sample means. If standard error is small, then we expect most samples to have similar means. 
+
+If standard error is large, large differences in sample means are more likely. If the difference between the samples we have collected is larger than we would expect based on the standard error, then one of two things has happened.
+	\begin{enumerate}
+		\item There is no effect but the sample means from our population fluctuate a lot and we happen to have collected two samples that produce very different means.
+		\item Two sample means come from the same population, so the difference is indicative of a genuine difference between samples. In other words, null hypothesis is unlikely.
+	\end{enumerate}
+\item The larger the observed difference between sample means (relative to the standard error), the more likely it is that the second explanation is correct: that is, that the two sample means differ because of the different testing conditions imposed on each sample. 
+\end{itemize}
+
+Remember that most test-statistics are a \textbf{signal-to-noise} ratio, "variance explained by the model"/"variance that model can't explain". The signal (the effect) here is the difference between the two group means. And the noise (the error) is the standard error, i.e. error in the estimate of the mean. So we can use the standard error between the two means as an estimate of the error in our model.
+
+\begin{center}
+$t = \frac{\text{observed difference between sample means - expected difference between population means if null is true}}{\text{standard error of the difference between two sample means}}$
+\end{center}
+
+Top half of the equation is the model, which is that the difference between means is bigger than the expected difference under null hypothesis, which in most case is 0. Bottom half is error.
+
+\section{Assumptions of t-test}
+Both t-test and paired sample t-test are parametric tests and as such are prone to the sources of bias. For paired samples t-test the assumption of normality relates to the sampling distribution of difference scores, not the scores themselves.
