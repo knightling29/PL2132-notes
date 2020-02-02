@@ -249,3 +249,145 @@ Solution is to use contrast coding rather than dummy coding. Contrast coding is 
 Another solution is to do a post hoc test: compare every mean group to all others (to conduct several overlapping tests using a t-statistic each time) but using a stricter acceptance criterion that keeps family wise error rate at .05. 
 
 \section{Choosing which contrast to use}
+In the puppy example, we may have 2 different hypothesis: 1) to test whether any puppy therapy would change happiness compared to control group. 2) Whether a 30 minute session could increase happiness more than a 15 minute one. 
+
+To do a planned contrast, hypothesis must be derived before data are collected. F statistic is based on $SS_M$ and $SS_R$. Planned contrasts extend the logic by breakdown $SS_M$ into component parts. The exact contrast will depend on the hypothesis you want to test. 
+
+\begin{figure}[h]
+	\includegraphics[width=0.5\textwidth,height=50mm]{Chapter 12 GLM 1 Comparing Several Independent Means ANOVA/plannedcontrast.PNG}
+	\caption{graphical representation of $SS_T$, $SS_R$,  $SS_M$. $SS_M$ split into 2 more components: 15 mins and 30mins}
+\end{figure}
+
+
+Rules in designing planned contrasts:
+\begin{enumerate}
+\item \textbf{If you have a control group, this is because you want to compare it against any other groups}: Your first contrast will be the one that compares all the experimental groups with the control group. Once you done this first contrast, any remaining contrast will depend upon which groups you predict will differ (based on the theory you are testing). 
+\item \textbf{Each contrast must compare only "two" chunks of variation}: Given that F is an omnibus test, we want to compare two chunks of variance only so that we know that the result represents a significance difference (or not) between the two portions of variation. If you follow the independents of contrast rule (rule 3), then you will always only compare two pieces of variance, then you should only end up with k - 1 contrasts (where k is the number of conditions you are comparing). 
+\item \textbf{Once a group has been singled out in a contrast, it can't be used in another contrast}: we are breaking one chunk of variation into smaller independent chunks. The independence matters for controlling Type 1 error rate. Once a slice of variance has been split from a larger chunk, it cannot be attached to any other pieces of variance; it can only be further subdivided into smaller variance chunks. In our example given that contrast 1 compares control group with experimental group, it cannot be incorporated into contrast 2. 
+\end{enumerate}
+
+
+\begin{figure}[h]
+	\includegraphics[width=0.5\textwidth,height=50mm]{Chapter 12 GLM 1 Comparing Several Independent Means ANOVA/plannedcontrast2.PNG}
+	\caption{Planned contrast in a four group experiment using one control group}
+\end{figure}
+
+First contrast compare all the experimental groups with control group. Second contrast compares Experiment group 1 and 2 with Experimental group 3 (you can compare 1 and 3 with 2 as well, or 2 and 3 with 1). Final contrast compare the remaining chunk of variance not compared. 
+
+In contrast, we are testing whether the group means are significantly differ from each other. If you are comparing two experimental group with one control. you are comparing the mean of the control group to the average mean of the 2 experimental group. All this comparisons is done using \emph{post hoc} tests.
+\clearpage
+\begin{figure}[h]
+	\includegraphics[width=0.5\textwidth,height=50mm]{Chapter 12 GLM 1 Comparing Several Independent Means ANOVA/plannedcontrast3.PNG}
+	\caption{Planned contrast in a four group experiment using 2 experimental and 2 control group}
+\end{figure}
+
+For 2 control group is the same. You subdivide control group into smaller chunks and make sure that comparing contrasts are not repeated for the same chunk of variance. 
+
+\section{Defining contrasts using weights}
+
+\textbf{Weights} are the values assign to dummy variables usually 0 and 1. 
+
+Rules of assigning values to contrasts:
+\begin{itemize}
+\item Rule 1: Choose sensible contrasts. Remember that you want to compare only two
+chunks of variation and that if a group is singled out in one contrast, that group
+should be excluded from any subsequent contrasts.
+
+\item Rule 2: Groups coded with positive weights will be compared against groups coded
+with negative weights. So, assign one chunk of variation positive weights and the
+opposite chunk negative weights.
+\item Rule 3: If you add up the weights for a given contrast the result should be zero.
+\item Rule 4: If a group is not involved in a contrast, automatically assign it a weight of
+zero, which will eliminate it from the contrast.
+\item Rule 5: For a given contrast, the weights assigned to the group(s) in one chunk of
+variation should be equal to the number of groups in the opposite chunk of variation.
+\end{itemize}
+\begin{figure}[h]
+	\includegraphics[width=1\textwidth,height=130mm]{Chapter 12 GLM 1 Comparing Several Independent Means ANOVA/orthogonalcontrast.PNG}
+	\caption{Orthogonal contrast and its dummy coding. each dummy variable is one contrast. must ensure that the Final sum of (product of contrast 1 and contrast 2) = 0}
+\end{figure}
+
+It is important that the weights for a contrast sum to zero as you are comparing two unique chunks of variation, so that  t test can be used (which assumes independence).  products of contrast 1 and contrast 2 should also sum to 0. 
+
+If contrasts are not indepedent, familywise rate will be infalted. However, if the products sum to zero then contrasts are independent or orthogonal. 
+\clearpage
+To put the dummy coding into a linear equation, it will be. 
+
+\begin{equation}
+\text{Happiness} = b_0 + b_1\text{Contrast}_{1i} + b_2\text{Contrast}{2i}
+\end{equation}
+
+If you substitute, $b$ with their corresponding dummy contrast code you will get. 
+
+\begin{equation}
+\begin{split}
+b_0 & = \text{grand mean} = \frac{\bar{X}_{\text{30mins}} + \bar{X}_{\text{15 mins}} + \bar{X}_{\text{Control}}}{3} \\
+b_1 & = \frac{1}{3}[(\frac{\bar{X}_{\text{30mins}} + \bar{X}_{\text{15 mins}}}{2}) - \bar{X}_{\text{Control}}] \\
+b_2 & = \frac{\bar{X}_{\text{30mins}} - \bar{X}_{\text{15 mins}}}{2}
+\end{split}
+\end{equation}
+
+\clearpage
+\section{Built in Contrasts}
+
+\begin{figure}[h]
+	\includegraphics[width=1\textwidth,height=110mm]{Chapter 12 GLM 1 Comparing Several Independent Means ANOVA/builtincontrast.PNG}
+	\caption{Different type of built in contrast in SPSS}
+\end{figure}
+
+Some of the contrast in SPSS are orthogonal (e.g. Helmert and difference contrasts) while others are non-orthogonal (deviation, simple and repeated)
+
+\section{Polynomial contrasts: trend analysis}
+Polynomial trend example: 
+\begin{enumerate}
+\item quadratic trend:  a drug enhances a performance on a task at first but drops performance as the dose increase. To find a quadratic trend, need at least 3 groups as 2 groups can only show linear trend. 
+\item cubic trend: two changes in the direction of the trend: DV goes up down up across the various IV. 
+\item quartic: 3 changes in direction.
+\end{enumerate}
+
+Contrasts for polynomial trends can be orthogonal.
+
+\section{Post hoc procedures}
+Post hoc tests consist of pairwise comparisons that are designed to compare all different combination of the treatment group. Taking every pair of groups and performing a separate test on each. However pairwise comparisons control the familywise error by correcting level of significance such that overall Type 1 error rate is $\alpha$. 
+
+Most popular correction is called Bonferroni correction. 
+
+For each post hoc tests ask the question:
+\begin{enumerate}
+\item Does the test control the Type I error rate?
+\item Does the test control the Type II error rate?
+\item is the test cobust?
+\end{enumerate}
+
+\subsection{Type I and Type II error rates for post hoc tests}
+
+Always a trade off between Type 1 error rate and statistical power of a test.
+
+If a test is conservative (Type I error will be small) then it is likely to lack statistical power (Type II error will be high). Important that multiple comparison procedures control the Type I error rate but without a substantial loss in power. 
+
+\begin{itemize}
+\item \textbf{Least-Significant Difference (LSD)} pairwise comparison makes no attempt to control Type I error and is equivalent to performing multiple tests on the data. Only difference is that LSD requires overall ANOVA to be significant.
+\item \textbf{Studentized Newman-Keuls (SNK)} procedure is a liberal test but lacks control over the familywise error rate
+\item \textbf{Bonferroni's} and \textbf{Tukey's} test both control Type I error rate very well but are conservative (lack statistical power). Bonferroni has more power when the number of comparison is small, Tukey is more powerful when testing large number of means. Tukey has greater power than \textbf{Dunn} and \textbf{Scheffe} tests.
+\item The \textbf{Ryan, Einot, Gabriel, Welsch Q} procedure (REGWQ) has good power and tight control of Type I error rate. If you want to test all pairs of means, this procedure is the best. 
+\end{itemize}
+
+When there is equal sample sizes, and equal group variance, use REGWQ or Tukey. If want guaranteed control over Type I error, use Bonferroni.
+
+\subsection{Are post hoc procedures robust?}
+Most research on post hoc tests has looked at whetehr test performs well when group sizes are different, when population variances are different and when data is not normally distributed. Multiple comparison procedures perform relative well under small deviations of normality. But it performs badly when group sizes are unequal and variances are different. 
+
+When sample sizes are different use: 
+\begin {itemize}
+\item \textbf{Hochberg's GT2} and 
+\item \textbf{Gabriel's pairwise test} procedure 
+\end{itemize} 
+They are designed to cope with situations when sample sizes are different. Gabriels procedure is generally more powerful but but can be too liberal when sample size are too different.  Hochberg's GT2 is unreliable when population variances are different. 
+
+When population variance differ use:
+\begin{itemize}
+\item Tamhane’s T2
+\item Dunnett’s T3
+\item Games–Howell 
+\item Dunnett’s C. 
+\end{itemize}
