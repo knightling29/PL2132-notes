@@ -147,11 +147,11 @@ $df$ for $SS_A$ is k -1. So df is 1 in our example.
 \section{Main effect of alcohol, $SS_B$}
 Similar to $SS_A$.
 \begin{equation}
-\text{SS}_A = \sum^k_{g=1} n_g(\bar{x}_g - \bar{x}_{grand})^2
+\text{SS}_B = \sum^k_{g=1} n_g(\bar{x}_g - \bar{x}_{grand})^2
 \end{equation}
 
 Alcohol split into 3 groups, no dose, low dose and high dose. \\
-$SS_{text{alcohol}} = 16(4.938-5.667)^2+ 16(5.668-5.667)^2 + 16(6.375-5.667)^2 = 16.53 $\\
+$SS_{\text{alcohol}} = 16(4.938-5.667)^2+ 16(5.668-5.667)^2 + 16(6.375-5.667)^2 = 16.53 $\\
 
 Similarly, $df$ is k -1 . So in this example, $df$ = 2
 
@@ -198,3 +198,11 @@ F_B &= \frac{MS_B}{MS_R}\\
 F_{A \times B} &= \frac{MS_{A \times B}}{MS_R}\\
 \end{split}
 \end{equation}
+
+
+\section{Model Assumptions in factorial designs}
+
+All potential source of bias in The beast of bias applies. E.g. if you violated assumption of homogeneity of variance, you will use Welch procedure to correect. 
+
+Pactical solution is to bootstrap post hoc tests so that these will be robusts.
+
